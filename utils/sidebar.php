@@ -8,7 +8,7 @@
                 </li>
                 </li>
                 <li>
-                    <a href="./ClassSubjects.php">Manage Subject</a>
+                    <a href="./ClassSubjects.php?id=&n=&s=">Manage Subject</a>
                 </li>
             </ul>
         </li>
@@ -29,10 +29,10 @@
             <a href="#teacherSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Teacher</a>
             <ul class="collapse list-unstyled" id="teacherSubmenu">
                 <li>
-                    <a href="#">Add Teacher</a>
+                    <a href="./add_teacher.php">Add Teacher</a>
                 </li>
                 <li>
-                    <a href="#">Manage Teacher</a>
+                    <a href="./teachers.php">Manage Teacher</a>
                 </li>
             </ul>
         </li>
@@ -65,7 +65,7 @@
             <a href="#accountingSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Accounting</a>
             <ul class="collapse list-unstyled" id="accountingSubmenu">
                 <li>
-                    <a href="#">Student Payment</a>
+                    <a href="./studentPayment.php">Student Payment</a>
                 </li>
                 <li>
                     <a href="#">Manage Payment</a>

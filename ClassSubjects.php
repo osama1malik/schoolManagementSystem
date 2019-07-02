@@ -35,8 +35,22 @@ if (!isset($_SESSION['login_user'])) {
     require_once("classesDataClass.php");
     $classData = new classesData();
     $classesArr = $classData->GetAllRecords();
-    $i = 0;
+    $id = '';
+    $class = '';
+    $section = '';
+
+    $id = $_GET['id'];
+    $class = $_GET['n'];
+    $tId = '';
+    $section = $_GET['s'];
+    $subjectId = array();
+    $teacherId = array();
     ?>
+    <script>
+        function addSubjectInfo(){
+            alert("called");
+        }
+    </script>
 </head>
 
 <body>
@@ -51,24 +65,54 @@ if (!isset($_SESSION['login_user'])) {
     <div class="d-flex" id="wrapper">
         <?php include("utils/sidebar.php") ?>
         <div class="container" id="main-content">
-            <div class="col-lg-4 p-4" id="class-area">
-                <div class="bg-light border rounded" id="sidebar-wrapper">
-                    <div class="sidebar-heading h4 mx-auto">Class</div>
-                    <div class="list-group list-group-flush">
-                        <?php
-                        $sql = "SELECT classId, className, classNumericName, section FROM classes ORDER BY classNumericName";
-                        $result = mysqli_query($connection, $sql);
-                        $select = "";
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $select .= '<a class="list-group-item list-group-item-action bg-white" href="#">' . $row['className'] . "(" . $row['classNumericName'] . ") '" . $row['section'] . "'" . '</a>';
-                        }
-                        echo $select;
-                        ?>
+            <div class="row">
+                <div class="col-lg-4 col-md-4" id="class-area">
+                    <div class="bg-light border rounded" id="sidebar-wrapper">
+                        <div class="sidebar-heading h4 mx-auto">Class</div>
+                        <div class="list-group list-group-flush">
+                            <?php
+                            $sql = "SELECT classId, className, classNumericName, section FROM classes ORDER BY classNumericName";
+                            $result = mysqli_query($connection, $sql);
+                            $select = "";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $select .= '<a class="list-group-item list-group-item-action bg-white className" href="?id=' . $row['classId'] . '&n=' . $row["className"] . '&s=' . $row["section"] . '">' . $row['className'] . "(" . $row['classNumericName'] . ") '" . $row['section'] . "'" . '</a>';
+                            }
+                            echo $select;
+                            ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-8" id="manage-section-area">
-
+                <div class="col-lg-8 col-md-8" id="manage-section-area">
+                    <div class="border rounded" id="sidebar-wrapper">
+                        <div class="sidebar-heading h4 mx-auto">Manage Subject</div>
+                        <div class="classSection"><?php echo $class . " " . $section ?></div>
+                        <div class="list-group list-group-flush">
+                            <?php
+                            $sql = "SELECT * FROM subject ORDER BY subjectName";
+                            $result = mysqli_query($connection, $sql);
+                            $select = "";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $select .= '<div class="row"><span class="list-group-item list-group-item-action bg-white col-md-8"  >' . $row['subjectName'] . '</span>';
+                                array_push($subjectId, $row['subjectId']);
+                                $sql2 = "SELECT teacherId, FirstName, LastName FROM teacher";
+                                $result2 = mysqli_query($connection, $sql2);
+                                $select .= '<select name="teacher" class="col-md-4">';
+                                array_push($teacherId, $tId);
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                    $tId = $row2['teacherId'];
+                                    $select .= '<option value="' . $tId . '">' . $row2['FirstName'] . ' ' . $row2['LastName'] . '</option>';
+                                }
+                                $select .= '</select></div>';
+                                // echo $select;
+                            }
+                            echo $select;
+                            ?>
+                        </div>
+                        <div>
+                            <button type="submit" onclick="addSubjectInfo()" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

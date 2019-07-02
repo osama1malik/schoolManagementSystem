@@ -67,42 +67,51 @@ if (!isset($_SESSION['login_user'])) {
     <div class="d-flex" id="wrapper">
         <?php include("utils/sidebar.php") ?>
         <div id="main-content">
-            <form action="" method="post">
-                <input type="hidden" name="classId" id="classId" value="<?= $classId ?>">
-                <div class="form-group">
-                    <label for="className">Class Name</label>
-                    <input type="text" name="className" class="form-control" id="className" placeholder="One" value="<?= $className ?>">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="post">
+                            <input type="hidden" name="classId" id="classId" value="<?= $classId ?>">
+                            <div class="form-group">
+                                <label for="className">Class Name</label>
+                                <input type="text" name="className" class="form-control" id="className" placeholder="One" value="<?= $className ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="classNumericName">Class Numeric Name</label>
+                                <input type="text" name="classNumericName" class="form-control" id="classNumericName" placeholder="1" value="<?= $classNumericName ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="section">Section</label>
+                                <input type="text" name="section" class="form-control" id="section" placeholder="A" value="<?= $section ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher">Teacher</label>
+                                <select name="teacher">
+                                    <?php
+                                    $sql = "SELECT teacherId, FirstName, LastName FROM teacher";
+                                    $result = mysqli_query($connection, $sql);
+                                    $select = "";
+                                    $tId = "";
+                                    $name = "";
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        if ($row['teacherId'] == $teacherId)
+                                            $tId = $row['teacherId'] . '" selected';
+                                        else
+                                            $tId = $row['teacherId'];
+                                            $name = $row['FirstName'] . " " . $row['LastName'];
+                                        $select .= '<option value="' . $tId . '"> ' . $name . '</option>';
+                                    }
+                                    echo $select;
+                                    ?>
+                                </select>
+                            </div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="classNumericName">Class Numeric Name</label>
-                    <input type="text" name="classNumericName" class="form-control" id="classNumericName" placeholder="1" value="<?= $classNumericName ?>">
-                </div>
-                <div class="form-group">
-                    <label for="section">Section</label>
-                    <input type="text" name="section" class="form-control" id="section" placeholder="A" value="<?= $section ?>">
-                </div>
-                <div class="form-group">
-                    <label for="teacher">Teacher</label>
-                    <select name="teacher">
-                        <?php
-                        $sql = "SELECT teacherId, FirstName, LastName FROM teacher";
-                        $result = mysqli_query($connection, $sql);
-                        $select = "";
-                        $tId = "";
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            if($row['teacherId'] == $teacherId)
-                                $tId = $row['teacherId'] . '" selected';
-                            else
-                                $tId = $row['teacherId'];
-                            $select .= '<option value="' . $tId . '> ' . $row['FirstName'] . ' ' . $row['LastName'] . '</option>';
-                        }
-                        echo $select;
-                        ?>
-                    </select>
-                    <!-- <input type="text" name="teacher" class="form-control" id="teacher" placeholder="Leave it null for now" value="<?= $teacherId ?>"> -->
-                </div>
-                <button type="submit" class="btn btn-primary">Edit</button>
-            </form>
+            </div>
         </div>
     </div>
 </body>

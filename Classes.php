@@ -49,7 +49,7 @@ if (!isset($_SESSION['login_user'])) {
         <?php include("utils/sidebar.php") ?>
         <div id="main-content">
             <span id="msg"></span>
-            <button class="btn" onclick="window.location.href='addClass.php';">Add Class</button>
+            <button class="btn float-right" onclick="window.location.href='addClass.php';">Add Class</button>
             <div class="container col-md-12">
                 <table class="table">
                     <th>#</th>
