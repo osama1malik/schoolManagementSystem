@@ -64,9 +64,10 @@ if (!isset($_SESSION['login_user'])) {
         die(mysqli_connect_error());
     } else { }
     ?>
-    <div class="d-flex" id="wrapper">
+    <div class="container d-flex" id="wrapper">
         <?php include("utils/sidebar.php") ?>
         <div id="main-content">
+            <div class="h1 text-center">CLASS EDIT</div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -98,7 +99,7 @@ if (!isset($_SESSION['login_user'])) {
                                             $tId = $row['teacherId'] . '" selected';
                                         else
                                             $tId = $row['teacherId'];
-                                            $name = $row['FirstName'] . " " . $row['LastName'];
+                                        $name = $row['FirstName'] . " " . $row['LastName'];
                                         $select .= '<option value="' . $tId . '"> ' . $name . '</option>';
                                     }
                                     echo $select;

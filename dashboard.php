@@ -31,13 +31,48 @@ if (!isset($_SESSION['login_user'])) {
     <!-- MDBootstrap CDN END -->
     <title>Dashboard</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
+    <?php
+    ?>
 </head>
 
 <body>
     <?php include('utils/header.php') ?>
     <?php include('utils/sidebar.php') ?>
-    <div id="profile">
-        <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-5">
+                <span class="bg-info p-4 rounded">
+                    Total Student:
+                    <?php
+
+                    ?>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-5">
+                <span class="bg-light p-4 rounded">
+                    Total Teacher:
+                    <?php
+
+                    ?>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-5">
+                <span class="bg-warning p-4 rounded">
+                    Total Class:
+                    <?php
+
+                    ?>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-5">
+                <span class="bg-secondary p-4 rounded">
+                    Total Marksheet:
+                    <?php
+
+                    ?>
+                </span>
+            </div>
+        </div>
     </div>
 </body>
 

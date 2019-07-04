@@ -30,7 +30,6 @@ class classesData
     {
         // TODO: Write Definition to insert record into database
         $sql = "INSERT INTO classes (classId, className, classNumericName, teacherId, section) VALUES (NULL, '$className', '$classNumericName', '$teacherId', '$section')";
-        // $sql = "INSERT INTO classes (classId, className, classNumericName, teacherId, section) VALUES (NULL, '$className', '$classNumericName', '$teacherId','$section')";
         $count = $this->pdo->exec($sql);
         if ($count > 0)
             header("location: classes.php");

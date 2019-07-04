@@ -32,6 +32,20 @@ if (!isset($_SESSION['login_user'])) {
     <title>Classes</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <?php
+    require_once("utils/config.php");
+    $connection = mysqli_connect(DBHOST, DBUSER, DBPASSWORD, DBNAME);
+    if (mysqli_connect_error()) {
+        die(mysqli_connect_error());
+    } else { }
+    ?>
+    <?php
+    require_once("classesDataClass.php");
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $classesDataClass = new classesData();
+        $classesDataClass->Insert($_POST["className"], $_POST['classNumericName'], $_POST['teacher'], $_POST['section']);
+    }
+    ?>
+    <?php
     require_once("classesDataClass.php");
     $classData = new classesData();
     $classesArr = $classData->GetAllRecords();
@@ -43,13 +57,14 @@ if (!isset($_SESSION['login_user'])) {
     <?php
     include('utils/header.php');
     require_once("utils/config.php");
-    
+
     ?>
-    <div class="d-flex" id="wrapper">
+    <div class="container d-flex" id="wrapper">
         <?php include("utils/sidebar.php") ?>
         <div id="main-content">
             <span id="msg"></span>
-            <button class="btn float-right" onclick="window.location.href='addClass.php';">Add Class</button>
+            <!-- <button class="btn float-right" onclick="window.location.href='addClass.php';">Add Class</button> -->
+            <button class="btn float-right" data-toggle="modal" data-target="#addClass">Add Class</button>
             <div class="container col-md-12">
                 <table class="table">
                     <th>#</th>
@@ -105,6 +120,56 @@ if (!isset($_SESSION['login_user'])) {
                 }
                 ?>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Class Modal -->
+    <div class="modal fade" id="addClass" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <h4 class="modal-title text-center">Add New Class</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container d-flex" id="wrapper">
+                        <div id="main-content">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label for="className">Class Name</label>
+                                    <input type="text" name="className" class="form-control" id="className" placeholder="One">
+                                </div>
+                                <div class="form-group">
+                                    <label for="classNumericName">Class Numeric Name</label>
+                                    <input type="text" name="classNumericName" class="form-control" id="classNumericName" placeholder="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="section">Section</label>
+                                    <input type="text" name="section" class="form-control" id="section" placeholder="A">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacher">Teacher</label>
+                                    <select name="teacher">
+                                        <?php
+                                        $sql = "SELECT teacherId, FirstName, LastName FROM teacher";
+                                        $result = mysqli_query($connection, $sql);
+                                        $select = "";
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $select .= '<option value="' . $row['teacherId'] . '"> ' . $row['FirstName'] . ' ' . $row['LastName'] . '</option>';
+                                        }
+                                        echo $select;
+                                        ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
